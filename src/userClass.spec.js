@@ -2,29 +2,16 @@ const sinon = require('sinon');
 const User = require('./userClass');
 const database = require('./db');
 
-//Asycronous Unit test scenario.
-
-/*
-    1: Test a function when there is returned data
-        Create user which returns the user model
-
-    2: Test a function when there is no returned data
-        Delete user account
-
-    3: Test for positive scenrios
-        When all required user information is supplied to the create function
-        When the userId to delete is supplied to the delete function
-
-    4: Test for negative scenearios.
-        When all required user information is not supplied to the create function
-
-    5: Test a complex function which makes several external api calls
-        Add a generate timestamp to the create user method
-
-*/
-
 
 describe("User Class", () => {
+
+    const user = new User({
+        firstname: "John",
+        lastname: "Doe",
+        username: "jonny_boy12_",
+        email: "johnd@gmail.com",
+        password: "hello:)"
+    }, database, new Date());
 
     describe("register()", () => {
 
@@ -35,16 +22,11 @@ describe("User Class", () => {
         it("should make a call to user.database.query()", async () => {
 
             //arrange
-            const user = new User({
-                firstname: "John",
-                lastname: "Doe",
-                username: "jonny_boy12_",
-                email: "johnd@gmail.com",
-                password: "hello:)"
-            }, database, new Date());
+            //..
 
             //stub
             sinon.stub(user, 'registrationValidation').returns(true);
+            sinon.stub(user.dateTime, 'toLocaleString');
             const databaseQuerySpy = sinon.stub(user.database, 'query');
 
             //act
@@ -62,13 +44,7 @@ describe("User Class", () => {
         it("should make a call to user.date.toLocaleString()", async () => {
 
             //arrange
-            const user = new User({
-                firstname: "John",
-                lastname: "Doe",
-                username: "jonny_boy12_",
-                email: "johnd@gmail.com",
-                password: "hello:)"
-            }, database, new Date());
+            //..
 
             //stub
             sinon.stub(user, 'registrationValidation').returns(true);
@@ -86,15 +62,10 @@ describe("User Class", () => {
         it("should return a copy of the user model when all required fields are not null", async () => {
 
             //arrange
-            const user = new User({
-                firstname: "John",
-                lastname: "Doe",
-                username: "jonny_boy12_",
-                email: "johnd@gmail.com",
-                password: "hello:)"
-            }, database, new Date());
+            //..
 
             //stub
+            sinon.stub(user.dateTime, 'toLocaleString');
             sinon.stub(user, 'registrationValidation').returns(true);
             sinon.stub(user.database, 'query').resolves({
                 rows: [{
@@ -130,14 +101,10 @@ describe("User Class", () => {
         it('should throw an error when required values are not provided', async () => {
 
             //arrange
-            const user = new User({
-                lastname: "Doe",
-                username: "jonny_boy12_",
-                email: "johnd@gmail.com",
-                password: "hello:)"
-            }, database, new Date());
+            //..
 
             //stub
+            sinon.stub(user.dateTime, 'toLocaleString');
             sinon.stub(user, 'registrationValidation').returns(false);
             sinon.stub(user.database, 'query');
 
