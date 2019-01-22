@@ -44,6 +44,7 @@ describe("User Class", () => {
             }, database, new Date());
 
             //stub
+            sinon.stub(user, 'registrationValidation').returns(true);
             const databaseQuerySpy = sinon.stub(user.database, 'query');
 
             //act
@@ -70,6 +71,7 @@ describe("User Class", () => {
             }, database, new Date());
 
             //stub
+            sinon.stub(user, 'registrationValidation').returns(true);
             sinon.stub(user.database, 'query');
             const dateTimeStub = sinon.stub(user.dateTime, 'toLocaleString');
 
@@ -93,6 +95,7 @@ describe("User Class", () => {
             }, database, new Date());
 
             //stub
+            sinon.stub(user, 'registrationValidation').returns(true);
             sinon.stub(user.database, 'query').resolves({
                 rows: [{
                     id: 1,
@@ -135,6 +138,7 @@ describe("User Class", () => {
             }, database, new Date());
 
             //stub
+            sinon.stub(user, 'registrationValidation').returns(false);
             sinon.stub(user.database, 'query');
 
             expect.assertions(1);
